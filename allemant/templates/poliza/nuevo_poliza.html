@@ -1,0 +1,126 @@
+{% extends "poliza/home_poliza.html" %}
+{% load humanize %}
+{% load staticfiles %}
+{% block menu %}
+    <ul class="nav navbar-nav">
+        <li><a href="{% url 'lista_polizas' %}">Pólizas</a></li>
+        <li class="active"><a href="{% url 'nuevo_poliza' %}">Nueva Póliza </a></li>
+
+        <li><a href="{% url 'plan_pagos' %}">Plan de Pagos </a></li>
+
+    </ul>
+{% endblock %}
+
+{% block contenido %}
+  <div class="container-fluid">   
+    <h2>
+      <a href="{% url 'lista_polizas' %}">
+      <i class="icon-arrow-left-3 fg-darker smaller"></i>
+      </a> Nueva Póliza
+    </h2>
+  </div>
+      
+  
+  <div class="container-fluid">    
+
+    <form class="form-horizontal " role="form"  action="{% url 'nuevo_poliza' %}" method= "POST">
+      {% csrf_token %}
+ 
+      <div class="well">
+        {% if poliza_form.errors %}
+          <span class="label label-danger">CAMPOS REQUERIDOS...</span>
+        {% endif %}       
+        <div class="form-group">
+            <label class="col-md-1 control-label">  Nº Póliza  </label>
+            <div class="col-md-2 {% if poliza_form.numero_poliza.errors %} has-error {% endif %}">
+                {{ poliza_form.numero_poliza }}
+            </div>
+            <label class="col-md-1 control-label"> Aseguradora  </label>
+            <div class="col-md-2 " >
+                {{ poliza_form.cia}}
+            </div>
+            <label class="col-md-1 control-label"> Cliente  </label>
+            <div class="col-md-5 ">
+                {{ poliza_form.cliente }}
+            </div>
+        </div>
+        <div class="form-group">
+
+            <label class="col-md-1 control-label"> Inicio  </label>
+
+            <div class="col-md-2 {% if poliza_form.fecha_inicio.errors %} has-error {% endif %}">
+                {{ poliza_form.fecha_inicio}}
+            </div>
+            <label class="col-md-1 control-label"> Fin  </label>
+            <div class="col-md-2 {% if poliza_form.fecha_fin.errors %} has-error {% endif %}">
+                {{ poliza_form.fecha_fin}}
+            </div>
+            <label class="col-md-1 control-label"> Moneda </label>
+            <div class="col-md-2 {% if poliza_form.ramo.errors %} has-error {% endif %}">
+                {{ poliza_form.moneda }}
+            </div>
+            
+        </div>
+        <div class="form-group">
+            
+            <label class="col-md-1 control-label"> Observación  </label>
+            <div class="col-md-8">
+                {{ poliza_form.observacion }}
+            </div>
+            <label class="col-md-1 control-label hide"> Estado </label>
+            <div class="col-md-1 hide ">
+                {{ poliza_form.estado_poliza }}
+                {{ poliza_form.cantidad_cuotas }}
+            </div>
+        </div>
+        <div class="form-group">
+          <table class="table " >
+               <thead class="bg-sgray">
+                   <tr >
+                     <th>Riesgo</th>
+                     <th>Ramo</th>
+                     <th>Subramo</th>
+                     <th>Producto</th>
+                     <th>M. Asegurada</th>
+                     <th>Prima</th>
+                     <th></th>       
+                   </tr>
+               </thead>
+               <tbody id="ramos">
+                    {{ riesgo_form.management_form }}
+                    {% for riesgo in riesgo_form %}
+
+                    <tr>
+                      <td>{{ riesgo.tipo_riesgo }}</td>
+                      <td>{{ riesgo.ramo }}</td>
+                      <td>{{ riesgo.sub_ramo }}</td>
+                      <td>{{ riesgo.producto }}</td>
+                      <td>{{ riesgo.materia_asegurada }}</td>
+                      <td>{{ riesgo.prima }}</td>
+                      <td><button id="mas_riesgo" type="button" class="btn btn-success"><i class="icon-plus-2"></i> </button></td>
+                    </tr>  
+                    {% endfor %}  
+               </tbody>
+               <tfoot>
+                    <tr>
+                         <td colspan="4" >TOTAL</td>
+                         <td>{{ poliza_form.materia_asegurado }}</td>
+                         <td>{{ poliza_form.prima }}</td>
+                    </tr>
+               </tfoot>
+          </table>
+        </div>
+        <div class="form-group">
+          <div class="btn-group pull-right col-md-1">
+            <button type="submit" class="btn btn-success" onclick="return confirm('¿Desea guardar la Poliza?')">Guardar</button>
+          </div>
+        </div>                   
+      </div>
+
+
+    </form>
+  </div>
+
+   
+           
+{% endblock %}

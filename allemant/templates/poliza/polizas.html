@@ -1,0 +1,73 @@
+{% extends "poliza/home_poliza.html" %}
+{% load humanize %}
+{% block menu %}
+  <ul class="nav navbar-nav">
+        <li class="active"><a href="{% url 'lista_polizas' %}">Pólizas</a></li>
+        <li><a href="{% url 'nuevo_poliza' %}">Nueva Póliza </a></li>
+        <li><a href="{% url 'plan_pagos' %}">Plan de Pagos </a></li>
+  </ul>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('#polizas').DataTable();
+    } );
+  </script>
+{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid">
+
+      <div class="row">
+        <div class="col-md-12">
+          <h2>  <i class="icon-clipboard-2"></i> Pólizas</h2>
+          <hr>
+        </div>
+      </div>
+
+     
+
+      <div >
+        <table id ="polizas" class="table striped bordered">
+          <thead class="bg-sgray">
+
+          <tr>
+            <th class=" text-left">Nº Póliza</th>
+            <th class=" text-left">Cliente</th>
+            <th class="text-left">Aseguradora</th>
+            <th class=" text-left">Ramo</th>
+            <th class=" text-center"></th>
+            <th class="text-right">Materia Asegurada</th>
+            <th class=" text-right">Prima</th>
+            <th class=" text-center">Vigencia</th>
+            <th class=" text-center"></th>
+            <th class=" text-center"></th>
+            <th class=" text-center"></th>
+          </tr>
+          </thead>
+
+          <tbody>
+          {% for poliza in lista_polizas %}
+          <tr class="">
+            <td> {{ poliza.numero_poliza|upper }} </td>
+            <td> {{ poliza.cliente|upper }} </td>
+            <td> {{ poliza.cia}} </td>
+            <td> {{ poliza.ramo}} </td>
+            <td class="text-center"> {{ poliza.moneda.abreviatura }} </td>
+            <td class="text-right"> {{ poliza.monto_asegurado|intcomma }} </td>
+            <td class="text-right"> {{ poliza.prima }} </td>
+            <td class="text-right"> {{ poliza.fecha_fin|date:"d/m/Y" }} </td>
+            <td class="text-center"><a href="{% url 'agregar_archivo' poliza.id %}"><i class="icon-upload" rel="tooltip" title="Agregar archivo"></i></a></td>
+            <td class="text-center"><a href="{% url 'editar_poliza' poliza.id %}"><i class="icon-pencil" rel="tooltip" title="Editar" style="color: red"></i></a></td>
+            <td class="text-center"><a href="{% url 'editar_poliza' poliza.id %}"><i class="icon-printer" rel="tooltip" title="Imprimir" style="color: darkGreen"></i></a></td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>  
+
+ </div>
+
+
+
+ </div>
+
+{% endblock %}

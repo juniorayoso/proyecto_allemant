@@ -1,0 +1,263 @@
+{% extends "cliente/home_cliente.html" %}
+
+
+{% block menu %}
+	<ul class="nav navbar-nav">
+        <li ><a href="{% url 'lista_clientes' %}">Clientes</a></li>
+        <li class="active dropdown">
+
+          <a href="{% url 'nuevo_cliente' 0 %}" class="dropdown-toggle" data-toggle="dropdown">Nuevo Cliente <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="{% url 'nuevo_cliente' 0 %}">Natural</a></li>
+            <li><a href="{% url 'nuevo_cliente' 1 %}">Jurídico</a></li>
+          </ul>
+        </li>
+	</ul>
+{% endblock %}
+{% block contenido %}
+	<div class="container-fluid" id = "nuevo_cliente_body">
+		<form class="form-horizontal " role="form" action="{% url 'nuevo_cliente' tipo_cliente %}" method="post">
+
+			{% csrf_token %}
+			<div class="tabbable tabs ">
+				
+				<div id="rep-content-tabs" class="tab-content" >
+					<div class="row tab-pane active" id="cliente-form-tab">
+						
+						
+
+						{% if cliente_natural %}
+							<div class="container-fluid">
+							<h2>
+							  <a href="{% url 'lista_clientes' %}">
+							    <i class="icon-arrow-left-3 fg-darker smaller"></i>
+							  </a> 
+
+							  Cliente Natural
+
+							</h2>
+							</div>
+
+							<div class="well ">
+								<legend><i class="icon-clipboard-2"></i>Datos Personales</legend>
+								{% if persona_form.errors %}
+                            		<span class="label label-danger">CAMPOS REQUERIDOS...</span>
+                            	{% endif %}
+
+						    	<div class="form-group ">
+						    		<label class="col-sm-1 control-label"> DNI </label>
+								    <div class="col-sm-2 {% if persona_form.dni.errors %} has-error {% endif %}"> 	
+								    	{{ persona_form.dni }}
+							    	</div>
+							    	<label class="col-sm-1 control-label"> Nombres </label>
+								    <div class="col-sm-5 {% if persona_form.nombre.errors %} has-error {% endif %}">
+								    	{{ persona_form.nombre }}								    	
+							    	</div>
+							    	<label class="col-sm-1 control-label"> Fecha Nac. </label>
+								    <div class="col-sm-2 {% if persona_form.fecha_nacimiento.errors %} has-error {% endif %}">
+								    	{{ persona_form.fecha_nacimiento }}
+							    	</div>
+						    	</div>
+
+						    	<div class="form-group ">
+						    		<label class="col-sm-1 control-label"> Sexo </label>
+								    <div class="col-sm-2 {% if persona_form.sexo.errors %} has-error {% endif %}">
+								    	{{ persona_form.sexo }}
+							    	</div>
+								    <label class="col-sm-1 control-label"> Apellidos </label>
+								    <div class="col-sm-5 {% if persona_form.apellido.errors %} has-error {% endif %}">
+								    	{{ persona_form.apellido }}
+							    	</div>
+								   
+							    	<label class="col-sm-1 control-label"> Estado Civil </label>
+								    <div class="col-sm-2 {% if persona_form.estado_civil.errors %} has-error {% endif %}">
+								    	{{ persona_form.estado_civil }}
+							    	</div>
+						    	</div>
+								<div class="form-group ">
+									<label class="col-sm-1 control-label"> Descripción </label>
+									<div class="col-sm-11 {% if cliente_form.descripcion.errors %} has-error {% endif %}">
+										{{ cliente_form.descripcion }}
+									</div>
+								</div>
+							</div>
+							
+							
+						{% else%}
+							<div class="container-fluid">
+								<h2>
+								  <a href="{% url 'lista_clientes' %}">
+								    <i class="icon-arrow-left-3 fg-darker smaller"></i>
+								  </a> 
+								  Cliente Jurídico
+								</h2>
+							</div>
+
+							<div class="well ">
+								<legend><i class="icon-clipboard-2"></i>Datos Cliente</legend>
+								{% if empresa_form.errors %}
+                            		<span class="label label-danger">CAMPOS REQUERIDOS...</span>
+                            	{% endif %}
+							    <div class="form-group">
+							    	<label class="col-sm-1 control-label"> RUC </label>
+									<div class="col-sm-2 {% if empresa_form.ruc.errors %} has-error {% endif %}">
+							    		{{ empresa_form.ruc }}
+									</div>
+									<label class="col-sm-1 control-label"> Nombres </label>
+								    <div class="col-sm-8 {% if empresa_form.razon_social.errors %} has-error {% endif %}">
+							    		{{ empresa_form.razon_social }}
+									</div>
+								     
+							    </div>
+							    <div class="form-group">
+							    	<label class="col-sm-1 control-label"> Giro </label>
+									<div class="col-sm-11 {% if empresa_form.giro_negocio.errors %} has-error {% endif %}">
+							    		{{ empresa_form.giro_negocio }}
+									</div>
+							    </div>
+
+							    <div class="form-group ">
+									<label class="col-sm-1 control-label"> Descripción </label>
+									<div class="col-sm-11 {% if cliente_form.descripcion.errors %} has-error {% endif %}">
+										{{ cliente_form.descripcion }}
+									</div>
+								</div>
+
+							    
+							</div>
+							
+
+						{% endif %}
+						<div id="contacto" class="well ">
+							<legend><i class="icon-clipboard-2"></i>Datos Contacto</legend>
+
+							{% if telefono_form.errors %}
+								<span class="label label-danger">CAMPOS REQUERIDOS...</span>
+                            {% endif %}
+
+							<div id="telefono" class="form-group ">
+
+							    <label class="col-sm-1 control-label"> Teléfono  </label>
+							    {{ telefono_form.management_form }}
+                                {% for telefono in telefono_form %}
+
+							    	<div class="col-sm-2 {% if telefono_form.errors %} 	has-error {% endif %} ">
+								    	{{ telefono.operador }}
+							    	</div>
+
+								    <div class="col-sm-2 {% if telefono_form.errors %} 	has-error {% endif %} ">
+								    	{{ telefono.numero }}
+							    	</div>
+							    	
+							    	<div class="col-sm-1" >
+								    	<button type="button" id="mas_fono" class="btn btn-success"><i class="icon-plus-2"></i> </button>
+							    	</div>
+							    {% endfor %}
+					    	</div>
+							<div id="email" class="form-group ">
+
+								{% if email_form.errors %}
+                            	{% endif %}
+
+								<label class="col-sm-1 control-label"> Email  </label>
+								{{ email_form.management_form }}
+                                {% for mail in email_form %}
+									<div class="col-sm-4 {% if email_form.errors %} has-error {% endif %} ">
+										{{ mail.email }}
+									</div>
+									
+									<div class="col-sm-1">
+										<button type="button" id="mas_email" class="btn btn-success"><i class="icon-plus-2"></i> </button>
+									</div>
+							    {% endfor %}
+
+						    </div>
+				    	
+					    	<div id="direccion" class="form-group">
+
+					    		{% if direccion_form.errors %}
+                            	{% endif %}
+
+							    <label class="col-sm-1 control-label"> Dirección  </label>
+							    {{ direccion_form.management_form }}
+                                {% for direccion in direccion_form %}
+								    <div class="col-sm-4 {% if direccion_form.errors %} has-error {% endif %} ">
+								    	{{ direccion.av_calle }}
+							    	</div>
+
+								    <div class="col-sm-2">
+								    	{{ direccion.interior }}
+							    	</div>
+							    	<div class="col-sm-2">
+								    	{{ direccion.ubigeo }}
+							    	</div>
+							    	<div class="col-sm-2">
+								    	{{ direccion.distrito }} 
+							    	</div>
+				    	    		<div class="col-sm-1">
+				    		    		<button id="mas_direccion" type="button" class="btn btn-success"><i class="icon-plus-2"></i> </button>
+				    		    	</div>
+				    		    {% endfor %}
+			    	    	</div>
+				    	</div>
+				    	
+				    	
+						<div class="well ">
+							<legend><i class="icon-clipboard-2"></i>Gestión de Cuenta</legend>	
+					    	
+					    	<div class="form-group">
+							    
+						    	<label class="col-sm-1 control-label"> Ejecutivo </label>
+							    <div class="col-sm-4">
+							    	{{ cliente_form.ejecutivo }}
+						    	</div>
+						    	<label class="col-sm-1 control-label"> Area </label>
+							    <div class="col-sm-5">
+							    	{{ cliente_form.area }}
+						    	</div>
+						    	
+					    	</div>
+					    	<div class="form-group">
+							   <label class="col-sm-1 control-label"> Supervisor </label>
+							    <div class="col-sm-4">
+							    	{{ cliente_form.supervisor }}
+						    	</div>
+						    	<label class="col-sm-1 control-label"> Vendedor </label>
+							    <div class="col-sm-5">
+							    	{{ cliente_form.vendedor }}
+						    	</div>
+						    	
+						    	<label class="col-sm-1 control-label hide"> Situación </label>
+							    <div class="col-sm-2 hide">
+							    	{{ cliente_form.estado }}
+						    	</div>
+						    	
+					    	</div>
+					    	<div class="form-group">
+							    
+						    	<label class="col-sm-1 control-label"> Grupo E. </label>
+							    <div class="col-sm-4">
+							    	{{ cliente_form.grupo_economico }}
+						    	</div>
+						    	
+					    	</div>
+						</div>
+ 
+
+						<div class="form-group">
+							<div class="btn-group pull-right col-md-1">
+						      	<a class="btn btn-danger" href="{% url 'lista_clientes' %}">Salir</a>
+						    </div>
+						    <div class="btn-group pull-right col-md-1">
+						      	<button type="submit" class="btn btn-success" onclick="return confirm('¿Desea guardar el Cliente?')">Guardar</button>
+							</div>
+              				
+						</div>
+					</div>
+
+					
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}

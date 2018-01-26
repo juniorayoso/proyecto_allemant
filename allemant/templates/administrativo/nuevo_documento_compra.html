@@ -1,0 +1,253 @@
+{% extends "administrativo/home_administrativo.html" %}
+{% load staticfiles %}
+{% block menu %}
+  <ul class="nav navbar-nav">
+        <li><a href="{% url 'ventas' %}">Consulta Ventas</a></li>
+        <li class="dropdown">
+          <a href="{% url 'nuevo_venta' 0 %}" class="dropdown-toggle" data-toggle="dropdown">Nueva Venta <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="{% url 'nuevo_venta' 0 %}">Factura</a></li>
+            <li><a href="{% url 'nuevo_venta' 1 %}">Boleta</a></li>
+
+          </ul>
+        </li>
+        <li><a href="{% url 'compras' %}">Consulta Compras</a></li>
+        <li class="active"><a href="{% url 'nuevo_compra' %}">Nueva Compra </a></li>
+  </ul>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('#polizas').DataTable();
+    } );
+  </script>
+{% endblock %}
+
+
+{% block contenido %}
+    <div class="container-fluid">   
+        <h2>
+            <a href="{% url 'lista_polizas' %}">
+            <i class="icon-icons"></i>
+            </a> Nueva Compra
+        </h2>
+    </div>
+		<div class="container-fluid">   
+			<form class="form-horizontal " role="form"  action="{% url 'nuevo_venta' %}" method= "POST">{% csrf_token %}
+
+			<div class="well">
+				<div class="form-group">
+					<label class="col-md-1 control-label"> Tipo Doc. </label>
+				
+					<div class="col-md-2">
+						<div class="input-control select">
+					    <select name="ramo" >
+				        <option value="1">Factura</option>
+				        <option value="2">Boleta de venta</option>
+					    </select>
+						</div>
+					</div>
+
+                    <label class="col-md-2 control-label"> Emision  </label>
+
+                    <div class="col-md-2 ">
+                        <div class="input-control text" data-role="datepicker" data-week-start="1" data-format='dd/mm/yyyy'>
+                        <input type="text" value="16/12/2014">
+                        </div>
+                    </div>
+                   			
+                    <label class="col-md-1 control-label"> Proveedor  </label>
+                    <div class="col-md-4 ">
+	            	    <div class="input-control text">
+	                        <input type="text" style="width: 350px" class="text-right"/>
+	                        <!--<button class="btn-search"></button>-->
+                    	</div>
+	          		</div>
+
+
+                    
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-1 control-label">
+                        Nº Doc.
+                    </label>
+            
+                    <div class="col-md-1">
+                        <div class="input-control text">
+                        <input type="text" style="width: 80px" class="text-right" value="" name="nro" >
+                        </div>
+                    </div>
+                     <label class="col-md-1 control-label" style="width: 40px">
+                        Serie
+                    </label>
+                    <div class="col-md-1">
+                        <div class="input-control text">
+                        <input type="text" value="" name="serie" style="width: 60px" class="text-right" >
+                        </div>
+                    </div>  
+
+                    <div class="col-md-3 ">
+                        
+                    </div>
+
+                    <!--<label class="col-md-2 control-label" style="width: 165px" class="text-right"> Poliza Asociada  </label>
+                    <div class="col-md-1 ">
+	            	    <div class="input-control text">
+	                        <input type="text" style="width: 100px" class="text-right"/>
+	                         
+                    	</div>
+	          		</div>
+
+                    <div class="col-md-1">
+                        <div class="input-control select">
+                        <select style="width: 80px" class="text-right">
+                        <option value="0">Cupón</option>
+                        <option value="1">Cupon 101</option>
+                        <option value="2">Cupon 102</option>
+                        <option value="2">Cupon 104</option>
+                        </select>
+                        </div>
+                    </div>
+                    -->
+                    <label class="col-md-1 control-label" > Moneda  </label>
+                    <div class="col-md-1">
+                        <div class="input-control select">
+                            <select style="width: 100px" class="text-right">
+                                <option value="1" selected>Soles</option>
+                                <option value="2">Dolares</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label class="col-md-2 control-label" style="width: 170px" class="text-right">
+                    Forma de pago
+                    </label>
+                    <div class="col-md-1">
+                        <div class="input-control select">
+                            <select style="width: 80px" class="text-right" >
+                            <option value="1">Contado</option>
+                            <option value="2">Credito</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+                <div class="form-group">
+                    
+                    
+
+                    <div class="col-md-5">
+	                    <label><input type="checkbox" /> Afecto a retención</label>
+	                </div>
+				<div>
+    		</div>
+
+
+
+
+                </div>
+
+                
+            <div class="row">
+
+                <table class="table striped bordered">
+		          	<thead class="bg-sgray">
+			          <tr>
+			            <th class="span1 text-center">Item</th>
+			            <th class="span1 text-left">Cantidad</th>
+			            <th class="span5 text-left">Descripción</th>
+			            <th class="span2 text-right">Precio Unitario</th>
+			            <th class="span2 text-right">Total</th>
+			            <th class="span1 text-center"></th>
+			          </tr>
+		          	</thead>
+
+		          	<tbody>
+
+			          <tr>
+			            <td class="text-center">1</td>
+			            <td>2</td>
+			            <td>Filtro de agua</td>
+			            <td class="span1 text-right">128.00</td>
+			            <td class="span1 text-right">256.00</td>
+			            <td class="text-center"><a href="/"><i class="icon-remove"></i></a></td>
+			          </tr>
+
+			          <tr>
+			            <td class="text-center">2</td>
+			            <td>5</td>
+			            <td>Soat</td>
+			            <td class="span1 text-right">235.00</td>
+			            <td class="span1 text-right">1175.00</td>
+			            <td class="text-center"><a href="/"><i class="icon-remove"></i></a></td>
+			          </tr>
+
+			          <tr>
+			            <td class="text-center">1</td>
+			            <td>2</td>
+			            <td>Desayuno Gerencia</td>
+			            <td class="span1 text-right">128.00</td>
+			            <td class="span1 text-right">256.00</td>
+			            <td class="text-center"><a href="/"><i class="icon-remove"></i></a></td>
+			          </tr>
+
+			          <tr>
+			            <td class="text-center">2</td>
+			            <td>5</td>
+			            <td>Servidor</td>
+			            <td class="span1 text-right">235.00</td>
+			            <td class="span1 text-right">1175.00</td>
+			            <td class="text-center"><a href="/"><i class="icon-remove"></i></a></td>
+			          </tr>
+         
+          			</tbody>
+        		</table>
+            </div>
+            <div class="row">
+                <div class="col-md-10 control-label">
+                    Sub. Total:
+                </div>
+                <div class="col-md-2">
+                    <div class="input-control text">
+                    <input type="text" value="156,954.00" name="sub" class="span1 text-right">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10 control-label">
+                    IGV:
+                </div>
+                <div class="col-md-2">
+                    <div class="input-control text">
+                    <input type="text" value="395.58" name="igv" class="span1 text-right">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10 control-label">
+                    Total:
+                </div>
+                <div class="col-md-2">
+                    <div class="input-control text">
+                    <input type="text" value="1688.58" name="tot" class="span1 text-right">
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+
+                <div class="form-group">
+                  <div class="btn-group pull-right col-md-1">
+                    <button type="submit" class="btn btn-success" onclick="return confirm('¿Desea guardar la Poliza?')">Guardar</button>
+                  </div>
+                </div> 
+                                       
+        </div>
+
+
+        </form>
+    </div>
+{% endblock %}

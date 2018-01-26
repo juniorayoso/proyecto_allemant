@@ -1,0 +1,69 @@
+{% extends "cliente/home_cliente.html" %}
+{% block menu %}
+	<ul class="nav navbar-nav">
+        <li class='active'><a href="{% url 'lista_clientes' %}">Clientes</a></li>
+        <li class="dropdown">
+
+          <a href="{% url 'nuevo_cliente' 0 %}" class="dropdown-toggle" data-toggle="dropdown">Nuevo Cliente <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="{% url 'nuevo_cliente' 0 %}">Natural</a></li>
+            <li><a href="{% url 'nuevo_cliente' 1 %}">Juridico</a></li>
+          </ul>
+        </li>
+	</ul>
+{% endblock %}
+
+{% block contenido %}
+
+
+	entraste perfil
+
+
+<form action="{% url 'perfil_cliente' id_cliente %}" method="post" >
+
+	{% csrf_token %}
+
+	cliente
+
+	{% comment %}
+	{% endcomment %}
+	<div id='cliente'>
+	{{ perfil_form.cliente_p }}
+	</div>
+
+
+	<br><br>
+
+	{{ nom_cat1 }}
+
+	{{ perfil_form.catalogo_p1 }}
+
+
+	<br><br>
+
+	{{ nom_cat2 }}
+	{{ perfil_form.catalogo_p2 }}
+
+
+	<br><br>
+
+	{{ nom_cat3 }}
+	{{ perfil_form.catalogo_p3 }}
+
+	<br><br>
+
+	{{ nom_cat4 }}
+	{{ perfil_form.catalogo_p4 }}
+
+	<br><br>
+
+	descripcion
+	{{ perfil_form.descripcion }}
+
+	<button type="submit"> enviar</button>
+
+</form>
+	
+
+
+{% endblock  %}

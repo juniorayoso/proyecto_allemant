@@ -1,0 +1,31 @@
+{% extends "core/home.html" %}
+{% load staticfiles %}
+{% block extrahead %}
+    <link href="{% static 'css/clientes.css' %}" rel="stylesheet">
+    <link href="{% static 'css/nuevo_cliente.css' %}" rel="stylesheet">
+    <link href="{% static 'js/editar_cliente.js' %}" rel="stylesheet">
+	
+	<script type="text/javascript">
+        // When the document is ready
+        $(document).ready(function () {
+            
+            $('.datepicker').datepicker({
+                format: "mm/dd/yyyy"
+            }); 
+            $("input[type=text]").keyup(function(){
+                $(this).val( $(this).val().toUpperCase() );
+            });
+            
+        });
+    </script>
+    
+    <script src="{% static 'js/nuevo_cliente.js' %} ">
+    </script>
+ 
+{% endblock %}
+{% block title %}Cliente | {{ block.super }}{% endblock %}
+{% block menu %}
+
+{% endblock %}
+{% block contenido %}
+{% endblock %}

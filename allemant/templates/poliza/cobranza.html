@@ -1,0 +1,210 @@
+{% extends "poliza/home_poliza.html" %}
+{% load humanize %}
+{% block menu %}
+    <ul class="nav navbar-nav">
+        <li><a href="{% url 'lista_polizas' %}">Pólizas</a></li>
+        <li><a href="{% url 'nuevo_poliza' %}">Nueva Póliza </a></li>
+        <li class="active"><a href="{% url 'cobranza' %}">Cobranza </a></li>
+    </ul>
+    <script type="text/javascript">
+        {% if poliza %}
+            var PLAN_PAGOS = "{% url 'plan_pagos' poliza.id %}"
+        {% endif %}  
+    </script>
+{% endblock %}
+{% block contenido %}
+	<div class="container-fluid">
+    	<form class="form-inline " action="{% url 'cobranza' %}" method="POST">
+    		{% csrf_token %}
+            <div class="well">
+                <div class="form-group">
+                    <div class="input-group">
+                        {{ cobranza_form.cia }}
+                    </div>
+                    <div class="input-group">
+                        <select  class="form-control">
+                            <option>--Elija un Estado--</option>
+                            <option>Opcion 1</option>
+                            <option>Opcion 2</option>
+                            <option>Opcion 3</option>
+                            <option>Opcion 4</option>
+                            
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        {{ cobranza_form.area }}
+                    </div>
+                    <div class="input-group">
+                        {{ cobranza_form.vendedor }}
+                    </div>
+                    <div class="input-group">
+                        <input  class="num_poliza form-control " placeholder="N° poliza, cupón o liquidación">
+                    </div>
+                </div>      
+    		    
+    		</div>
+            <div class="well">
+
+                <div class="input-group">
+                    Desde
+                    {{ cobranza_form.fecha_inicio }}
+                </div>
+                <div class="input-group">
+                    Hasta
+                    {{ cobranza_form.fecha_fin }}
+                </div>
+                
+                <div class="pull-right form-group">
+
+                    <button  type="submit" id="buscar" class="select btn btn-success" >Buscar</button>
+                </div>
+            </div>
+            <div class="well">
+
+                <div class="input-group">
+                    
+                    <input  class="datepicker num_poliza form-control" placeholder="N° de Liquidacion">
+                </div>
+
+                
+            </div>
+    	</form>
+        
+        
+
+       
+
+        <div  class="well">
+            {% if not busqueda %}
+                <form method="post"  >
+                    <table class="table " >
+                        <thead class="bg-sgray">
+                            <tr >
+                                
+                                <th></th>
+                                <th>Cuota</th>
+                                <th>N° de Cupon</th>
+                                <th>Cliente</th>
+                                <th>Teléfono</th>
+                                <th>N° de Poliza</th>
+                                <th>Monto</th>
+                                <th>Fecha Vencimiento</th>
+                                <th>Llamadas</th>
+                                <th>Fecha Pago</th>
+                                <th>Estado</th>
+                                <!--<th>Fecha Pago</th>
+                                <th>Banco</th>
+                                <th>N° Voucher</th>-->
+                            </tr>
+                        </thead>
+                        <tbody id="cuotas">
+                            {% for cupon in cupones %}
+                            <tr class="info">
+                                <td><input type="checkbox" id="inlineCheckbox1" value="option1"></td>
+                                <td> {{ cupon.numero_cuota }}</td>
+                                <td> {{ cupon.numero_cupon }} </td>
+                                <td> {{ cupon.cliente }} </td>
+                                <td> {{ cupon.telefono }} </td>
+                                <td> {{ cupon.poliza }} </td>
+                                <td> {{ cupon.monto }} </td>
+                                <td> {{ cupon.vencimiento }} </td>
+                                <td > <a href="#"  data-toggle="modal" data-target="#myModal" >2 </a></td>
+                                <td>  <input class="datepicker form-control" type="text"  ></td>
+                                <td> Pendiente </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="container">
+                        <button type="submit" id="grabar_cupones" class=" btn btn-success pull-right" onclick="return confirm('¿Desea guardar los cambios?')">Grabar</button>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                <h4 class="modal-title" id="myModalLabel">Lista de Comunicación</h4>
+                <div class="well">
+                      
+                    <table class="table">
+                        <tbody>
+                            <tr>        
+                                <td><input  class="datepicker num_poliza form-control" placeholder="Ingrese fecha llamada"></td>
+                            
+                                <td><input  class="datepicker num_poliza form-control" placeholder="Ingrese fecha promesa">
+                                
+                                </td>    
+                            
+                                <td>
+                                    <select  class="form-control">
+                                        <option>--Elija un Estado--</option>
+                                        <option>Opcion 1</option>
+                                        <option>Opcion 2</option>
+                                        <option>Opcion 3</option>
+                                        <option>Opcion 4</option>
+                                    
+                                    </select>
+                                </td>    
+                                  
+
+                                <td><button  id="buscar_poliza" class="select btn btn-success" >Crear</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-body">
+                <table class="table " >
+                    <thead class="bg-sgray">
+                        <tr >
+                            <th>Llmada</th>
+                            <th>Fecha</th>
+                            <th>Premesa de pago</th>
+                            <th>Estado</th>
+                            
+                            <th></th>
+                            <!--<th>Fecha Pago</th>
+                            <th>Banco</th>
+                            <th>N° Voucher</th>-->
+                        </tr>
+                    </thead>
+                    <tbody id="cuotas">
+                        <tr class="info">
+                            <td> 1 </td>
+                            <td>  12/12/2014</td>
+                            <td>  12/12/2014</td>
+                            <td> A </td>
+                            <td> <i  class=" icon-remove btn btn-danger" ></i> </td>
+                        </tr>
+                        <tr class="info">
+                            <td> 1 </td>
+                            <td>  12/12/2014</td>
+                            <td>  12/12/2014</td>
+                            <td> P </td>
+                            <td> <i  class=" icon-remove btn btn-danger" ></i> </td>
+                        </tr>
+                        <tr class="info">
+                            <td> 1 </td>
+                            <td>  12/12/2014</td>
+                            <td>  12/12/2014</td>
+                            <td> A </td>
+                            <td> <i  class=" icon-remove btn btn-danger" ></i> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

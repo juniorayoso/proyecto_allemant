@@ -1,0 +1,98 @@
+{% extends 'core/base.html' %}
+{% load staticfiles %}
+{% block extrahead %} 
+	<link rel="stylesheet" media="screen" href="{% static 'css/login.css' %}" >
+{% endblock %}
+{% block content %}
+
+
+	<div class="container metro">
+		<div class="grid fluid">
+
+			<div class="row no-phone on-tablet">
+				<div class="span2"></div>
+				<div class="span8">
+					<div class="row-bordered bg-sgray2">
+						<div class="row">
+							<div class="span6"></div>
+							<div class="span6">
+								<h1>
+									<a href="#">
+									<i class="icon-fire fg-crimson"></i> 
+									<span class="fg-gray">Allemant</span></a>
+								</h1>
+								<br>
+								
+								{% if error  %}
+									<div class="row-bordered bg-spink">
+										<div class="row">
+											<div class="span1 text-center">
+												<i class="icon-warning fg-amber"></i>
+											</div>
+											<div class="span11">
+												{{ error }}
+											</div>
+										</div>
+									</div>
+								{% else %}
+									Por favor ingrese los datos solicitados<br><br>
+								{% endif %}
+
+								<form  method="POST" action="{% url 'django.contrib.auth.views.login' %}">
+									{% csrf_token %}
+									<div class="row">
+										<div class="span12 text-left">Usuario</div>
+									</div>
+
+									<div class="row">
+										<div class="span12 text-left">
+											<div class="input-control text">
+										    <input type="text" name="username" placeholder=""  required tabindex="1">
+										    <button class="btn-clear"></button>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="span12 text-left">Contraseña</div>
+									</div>
+
+									<div class="row">
+										<div class="span12 text-left">
+											<div class="input-control password">
+										    <input type="password" name="password" placeholder="" required tabindex="2"/>
+										    <button class="btn-reveal"></button>
+										  </div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="span6 text-left">
+											
+											<small><a href="/forgot-password/">Olvide mi contraseña</a></small>
+										</div>
+										<div class="span6 text-right"><br>
+											<button type="submit" class="bg-emerald text-white"><strong>Ingresar</strong></button>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="span12 text-left"><br>
+											<small><span class="text-muted" >¿Aun no tiene una cuenta? </span><a href="#" class="fg-darkBlue">Registrate</a></small>
+										</div>
+									</div>
+
+								
+								</form>
+							
+							</div>	
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+	</div>
+
+{% endblock %}

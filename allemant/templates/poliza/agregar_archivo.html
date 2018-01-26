@@ -1,0 +1,33 @@
+{% extends "poliza/home_poliza.html" %}
+{% block menu %}
+    <ul class="nav navbar-nav">
+        <li><a href="{% url 'lista_polizas' %}">Pólizas</a></li>
+        <li><a href="{% url 'nuevo_poliza' %}">Nueva Póliza </a></li>
+        <li><a href="{% url 'plan_pagos' %}">Plan de Pagos </a></li>
+        <li class="active"><a href="#">Archivos </a></li>
+    </ul>
+{% endblock %}
+{% block contenido %}
+	<form class="form-horizontal " role="form"  
+		action="{% url 'agregar_archivo' id_poliza %}" 
+			method= "POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="well">
+		           
+		    <div class="form-group">
+		        
+		        
+	    		
+	    		<div class="col-md-3">
+	    			{{ archivo_form.archivo }}
+	    		</div>
+	    		<div class="col-md-2">
+	    			{{ archivo_form.observacion }}
+	    		</div>
+	    		<div class="col-md-2">
+	    			<button type="submit" id="agregar" class=" btn btn-success" >Agregar</button>
+	    		</div>
+    		</div>
+		</div>
+	</form>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "core/home.html" %}
+{% load staticfiles %}
+{% block extrahead %}
+    
+
+	<script type="text/javascript">
+        // When the document is ready
+        
+        var GET_PLAN_PAGOS = "{% url 'get_plan_pagos' %}"
+        var BORRAR_CUPON ="{% url 'borrar_cupon' %}"
+        $(document).ready(function () {
+            
+            $('.datepicker').datepicker({
+                format: "dd/mm/yyyy"
+            });  
+
+            $('#busqueda_cliente').select2({
+                minimumInputLength: 3
+            });
+            $("input[type=text]").keyup(function(){
+                $(this).val( $(this).val().toUpperCase() );
+            });
+        
+        });
+    </script>
+{% endblock %}
+{% block title %}Administrativo | {{ block.super }}{% endblock %}
+
+

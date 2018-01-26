@@ -1,0 +1,63 @@
+{% extends "administrativo/home_cia.html" %}
+{% block menu %}
+  <ul class="nav navbar-nav">
+        <li class="active"><a href="{% url 'lista_cia' %}">Compañias de Seguro</a></li>
+        <li><a href="">Nueva Compañia de Seguro </a></li>
+  </ul>
+{% endblock %}
+<!-- fin container -->
+{% block contenido %}
+<div class="container">
+    <!-- <div class="grid fluid">-->
+
+      <div class="row">
+        <div class="span12">
+          <h2><a href="/menu-principal/"><i class="icon-arrow-left-3 fg-black smaller"></i></a> Compañias de Seguro</h2>
+             <hr>
+        </div>
+      </div>
+      
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+          <div class="col-md-9">
+            <input type="search" class="form-control" placeholder="Ingrese datos a buscar">
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class=" control btn btn-success">Buscar</button>
+          </div>
+        </div>
+      </form>
+
+      <hr>
+      <div class="row">
+
+        <table class="table striped bordered">
+          <thead class="bg-sgray">
+          <tr>
+            <th class="span4 text-left">RUC</th>
+            <th class="span2 text-left">Razón Social</th>
+            <th class="span2 text-center">Teléfono</th>
+            <th class="span2 text-center">Dirección</th>
+            <th class="span1 text-center"><a href="ver_cia.html"><i class="icon-zoom-in"></i></a></th>
+          </tr>
+          </thead>
+
+          <tbody>
+          {% for CIA in lista_cia %}
+          <tr>
+            <td>{{ CIA.ruc }}</td>
+            <td>{{ CIA.razon_social }}</td>
+            <td>{{ CIA.telefono_fijo }}</td>
+            <td>{{ CIA.direccion }}</td>
+            <td class="text-center"><a href="/detalle-cia/"><i class="icon-zoom-in"></i></a></td>
+          </tr>
+          {% endfor %}
+          </tbody>
+
+        </table>
+      </div>  
+
+   <!-- </div> -->
+  </div> <!-- fin container -->
+
+{% endblock %}

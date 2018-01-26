@@ -1,0 +1,242 @@
+{% extends "poliza/home_poliza.html" %}
+{% load humanize %}
+{% load staticfiles %}
+{% block menu %}
+  <ul class="nav navbar-nav">
+        <li><a href="{% url 'lista_polizas' %}">Pólizas</a></li>
+        <li><a href="{% url 'nuevo_poliza' %}">Nueva Póliza </a></li>
+        <li class="active"><a href="">Editar Póliza </a></li>
+  </ul>
+{% endblock %}
+
+
+{% block contenido %}
+    <div class="container-fluid">
+        <h2>
+            <a href="{% url 'lista_polizas' %}">
+                <i class="icon-arrow-left-3 fg-darker smaller"></i>
+            </a> 
+          Editar Póliza
+        </h2>
+    </div>
+
+  <div class="container-fluid"> 
+
+    <form class="form-horizontal" role="form" action="{% url 'editar_poliza' id_poliza %}" method= "POST">
+      {% csrf_token %}
+      <div class="well">
+            <div class="form-group">
+              <label  class="col-md-1 control-label">  Nº Póliza   </label>
+              <div class="col-md-2">
+                {{ poliza_form.numero_poliza }}
+              </div>
+              <label  class="col-md-1 control-label"> Aseguradora  </label>
+              <div class="col-md-2">
+                {{ poliza_form.cia}}
+              </div>
+              <label  class="col-md-1 control-label"> Cliente  </label>
+              <div class="col-md-5">
+                {{ poliza_form.cliente }}
+              </div>
+            </div>
+
+            <div class="form-group">
+             
+              <label  class="col-md-1 control-label"> Inicio  </label>
+             
+              <div class="col-md-2">
+                {{ poliza_form.fecha_inicio }}
+              </div>
+              <label  class="col-md-1 control-label"> Fin  </label>
+              <div class="col-md-2">
+                {{ poliza_form.fecha_fin}}
+              </div>
+              <label  class="col-md-1 control-label"> Moneda  </label>
+              <div class="col-md-2">
+                {{ poliza_form.moneda }}
+              </div>
+               
+            </div>
+
+            
+
+            <div class="form-group">
+              <label  class="col-md-1 control-label"> Observación  </label>
+              <div class="col-md-11">
+                {{ poliza_form.observacion }}
+              </div>
+              <label  class="col-md-1 control-label hide"> Estado </label>
+              <div class="col-md-2 hide">
+                {{ poliza_form.estado_poliza }}
+              </div>
+            </div>
+            <div class="form-group">
+                <table class="table " >
+                    <thead class="bg-sgray">
+                      <tr >
+                        <th>Riesgo</th>
+                        <th>Ramo</th>
+                        <th>Subramo</th>
+                        <th>Producto</th>
+                        <th>M. Asegurada</th>
+                        <th>Prima</th>
+                        <th></th>       
+                      </tr>
+                    </thead>
+                    <tbody id="ramos">
+                        {{ riesgo_form.management_form }}
+                        {% for riesgo in riesgo_form %}
+
+                        <tr>
+                          <td>{{ riesgo.tipo_riesgo }}</td>
+                          <td>{{ riesgo.ramo }}</td>
+                          <td>{{ riesgo.sub_ramo }}</td>
+                          <td>{{ riesgo.producto }}</td>
+                          <td>{{ riesgo.materia_asegurada }}</td>
+                          <td>{{ riesgo.prima }}</td>
+                          <td><button id="mas_riesgo" type="button" class="btn btn-success"><i class="icon-plus-2"></i> </button></td>
+                        </tr>  
+                        {% endfor %}  
+                    </tbody>
+                </table>
+            </div>
+              
+            <div class="form-group">
+              <div class="btn-group pull-right col-md-1">
+                <button type="submit" class="btn btn-success" onclick="return confirm('¿Desea guardar los cambios?')">Guardar</button>
+              </div>
+              <div class="btn-group pull-right col-md-2">
+                <a  href="{% url 'plan_pagos' id_poliza %}" class="btn btn-info" >Plan de Pagos</a>
+              </div>
+            </div>    
+      </div>
+   </form>
+  </div>  
+
+  
+  {% comment %}
+  {% endcomment %}
+    
+
+  <div class="container-fluid">
+
+
+    <form class="form-horizontal " role="form" action="" method= "POST" enctype="multipart/form-data">
+      {% csrf_token %}
+        <div class="well">     
+          <div class="form-group">
+
+            <div class="col-md-2">
+               importar Trama
+            </div>
+
+            <div class="col-md-4">
+               {{ trama_form.file_trama }}
+            </div>
+
+            <div class="col-md-2">
+
+              <button type="submit" id="agregar"class=" btn btn-warning">
+                <i>Excel Trama</i>
+              </button>
+              
+            </div>
+
+          </div>
+
+          <div class="form-group">
+
+            <div class="col-md-2">
+               importar Independiente
+            </div>
+
+            <div class="col-md-4">
+               {{ independiente_form.file_independiente }}
+            </div>
+
+            <div class="col-md-2">
+
+              <button type="submit" id="agregar"class=" btn btn-warning">
+                <i>Excel Independiente</i>
+              </button>
+              
+            </div>
+            
+          </div>
+
+        </div>
+    </form>
+
+  </div>
+
+
+
+  <div class="container-fluid">
+          
+    <form class="form-horizontal " role="form" action="{% url 'agregar_archivo' id_poliza %}" method= "POST" enctype="multipart/form-data">
+      
+      {% csrf_token %}
+        
+        <div class="well">     
+          
+          <div class="form-group">
+            
+            <div class="col-md-3">
+              {{ archivo_form.archivo }}
+            </div>
+            
+            <div class="col-md-2">
+              {{ archivo_form.observacion }}
+            </div>
+            
+            <div class="col-md-2">
+              <button type="submit" id="agregar"class=" btn btn-warning" >
+                <i  class="icon-upload ">Agregar archivo</i>
+              </button>  
+            </div>
+          
+          </div>
+        
+        </div>
+    </form>
+       
+  </div>
+
+  <div class="container-fluid">
+    
+    <table id = "lista-archivo" class="table striped bordered">
+      
+      <thead class="bg-sgray">
+        
+        <tr>
+          <th class="span1 ">Poliza</th>
+          <th class="span4 ">Archivo</th>
+          <th class="span4 ">Observacion</th>
+          <th class="span1 text-center">Eliminar</th>
+        </tr>
+      
+      </thead>
+
+      <tbody>
+        {% for archivo in lista_archivos %}
+        
+        <tr>
+          <td> {{ archivo.poliza }} </td>
+          <td> 
+            <a href="{{ archivo.archivo.url }}" target="_blank" > {{ archivo.archivo.url }} </a>
+          </td> 
+          <td> {{ archivo.observacion}} </td>
+          <td class="text-center">
+            <a href="#"><i class="icon-remove" style="color: red"></i></a>
+          </td>
+        </tr>
+        
+        {% endfor %}
+      </tbody>
+
+    </table>
+  
+  </div> 
+ 
+{% endblock %}
+

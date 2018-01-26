@@ -1,0 +1,232 @@
+{% extends "core/home.html" %}
+{% block contenido %}
+	<br><br> <br><br>
+	<div class="container metro">
+			<div class="grid fluid">
+
+				<!--<form action="/busqueda-nueva/"   method="POST">{% csrf_token %}
+					<div class="row">
+				  	<div class="span10">
+				  		<div class="input-control text">
+						    <input type="text" name="term_busq" placeholder="Buscar por DNI, Nro. de Póliza, Dirección, Placa." required/>
+						    <button class="btn-search"></button>
+							</div>
+						</div>
+						<div class="span2 text-right">
+				  		<button type="submit" class="bg-steel text-white"><strong>Buscar</strong></button>
+						</div>
+					</div>
+				</form>-->
+
+				
+
+			  <div class="row no-phone on-tablet"><!--menu desktop -->
+			  	<div class="span12">
+
+			  		<a href="{% url 'lista_polizas' %}" >
+				      <div class="tile bg-lime double-vertical">
+						    <div class="tile-content icon">
+							      <i class="icon-clipboard-2"></i> 
+							    </div>
+							    <div class="tile-status">
+							      <span class="name">Pólizas</span>
+							    </div>
+							</div>
+						</a>
+						
+						<!--<a href="/atencion-cliente/"  >
+							<div class="tile bg-lightBlue double">
+						    <div class="tile-content icon">
+						      
+						    </div>
+						    <div class="tile-status">
+						      <span class="name">Atencion al cliente</span>
+						    </div>
+							</div>
+						</a>-->
+
+						<a href="{% url 'lista_clientes' %}"  >
+						<div class="tile bg-darkPink double">
+					    <div class="tile-content icon">
+					    	<i class="icon-user-3"></i>
+					    </div>
+					    <div class="tile-status">
+					      <span class="name">Clientes</span>
+					    </div>
+						</div>
+						</a>
+						
+						<a href="{% url 'cobranza' %}"  >
+						<div class="tile bg-mauve ">
+					    <div class="tile-content icon">
+					       <i class="icon-coins"></i> 
+					    </div>
+					    <div class="tile-status">
+					      <span class="name">Cobranza</span>
+					    </div>
+						</div>
+						</a>
+						<!--
+						<a href="/vehiculos/"  >
+						<div class="tile bg-orange">
+					    <div class="tile-content icon">
+					       <i class="icon-briefcase"></i> 
+					    </div>
+					    <div class="tile-status">
+					      <span class="name">Vehiculos</span>
+					    </div>
+						</div>
+						</a>
+
+						<a href="/facturas/"  >
+						<div class="tile bg-mauve">
+					    <div class="tile-content icon">
+					       <i class="icon-pie"></i> 
+					    </div>
+					    <div class="tile-status">
+					      <span class="name">Facturas</span>
+					    </div>
+						</div>
+						</a>
+
+						<a href="/tickets-atencion/"  >
+						<div class="tile bg-steel double">
+							<div class="tile-content icon">
+					       <i class="icon-ticket"></i> 
+					    </div>
+					    <div class="tile-status">
+					      <span class="name">Tickets</span>
+					    </div>
+					    <div class="brand">
+					      <div class="badge bg-red">4</div>
+					    </div>
+						</div>
+						</a>
+
+						<a href="/cotizaciones/"  >
+						<div class="tile bg-orange double">
+					    <div class="tile-content icon">
+					       <i class="icon-briefcase"></i> 
+					    </div>
+					    <div class="tile-status">
+					      <span class="name">Cotizaciones</span>
+					    </div>
+						</div>
+						</a>
+						-->
+						<a href="/admin/auth/user/"  >
+						<div class="tile bg-indigo double">
+					    <div class="tile-content icon">
+					       <i class="icon-user-3"></i> 
+					    </div>
+					    <div class="tile-status">
+					      <span class="name">Usuarios</span>
+					    </div>
+						</div>
+						</a>
+						
+						<a href="/admin/auth/group/"  >
+						<div class="tile bg-darkOrange double">
+					    <div class="tile-content icon">
+					       <i class="icon-accessibility"></i> 
+					    </div>
+					    <div class="tile-status">
+					      <span class="name">Grupos</span>
+					    </div>
+						</div>
+						</a>
+						<!--
+						<a href="/auditoria/"  >
+						<div class="tile bg-lightOrange">
+					    <div class="tile-content icon">
+					       <i class="icon-fire"></i> 
+					    </div>
+					    <div class="tile-status">
+					      <span class="name">Auditoría / Mantenimiento</span>
+					    </div>
+						</div>
+						</a>
+
+						<a href="/reporte-siniestros/"  >
+						<div class="tile bg-teal double">
+					    <div class="tile-content icon">
+					       <i class="icon-fire"></i> 
+					    </div>
+					    <div class="tile-status">
+					      <span class="name">Reportes Siniestros</span>
+					    </div>
+						</div>
+						</a>
+
+						<a href="/chart/1/"  >
+						<div class="tile bg-emerald double">
+					    <div class="tile-content icon">
+					       <i class="icon-pie"></i> 
+					    </div>
+					    <div class="tile-status">
+					      <span class="name">Estadisticas</span>
+					    </div>
+						</div>
+						</a>
+						-->
+						<a href="/admin/">
+						<div class="tile bg-darkRed double">
+					    <div class="tile-content icon">
+					       <i class="icon-drawer-2"></i>
+					    </div>
+					    <div class="tile-status">
+					      <span class="name">Administrador</span>
+					    </div>
+						</div>
+						</a>
+									<!--
+								</div>
+						  </div>
+
+						   <div class="row">
+						  	<div class="span12">
+						  		<h2>Estadisticas</h2>
+						  	</div>
+						  </div>
+
+						  <div class="row-bordered">
+							  <div class="row">
+							  	<div class="span4">
+							  		<div id="piechart" style="width: 400px; height: 200px;"></div>
+							  	</div>
+							  	<div class="span4"><br>
+							  		<div id="chart_div" style="width: 400px; height: 200px;"></div>
+							  	</div>
+							  	<div class="span4">
+							  	</div>
+							  </div>
+						  </div>
+						  <br> -->
+
+						  
+
+						  		<a href="{% url 'ventas' %}" >
+							  		<div class="tile bg-darkGreen double">
+							  	    <div class="tile-content icon">
+							  	    	<i class="icon-coins"></i>
+							  	    </div>
+							  	    <div class="tile-status">
+							  	      <span class="name">Administración</span>
+							  	    </div>
+							  		</div>
+						  		</a>
+ <!--
+						  			<a href="/factura-venta-nueva/"  >
+						  			<div class="tile bg-lightBlue">
+						  		    <div class="tile-content icon">
+						  		      
+						  		    </div>
+						  		    <div class="tile-status">
+						  		      <span class="name">Facturación</span>
+						  		    </div>
+						  			</div>
+						  			</a>
+-->
+			</div>
+	</div>
+{% endblock %}

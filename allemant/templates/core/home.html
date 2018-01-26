@@ -1,0 +1,39 @@
+{% extends "core/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+    
+    <nav id="head" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    
+        <div class="container-fluid ">
+            
+            <div class="navbar-header">
+                
+                <a href="{% url 'home' %}" class="navbar-brand"><span class="icon-fire"></span> ALLEMANT</a>
+                
+            </div>
+            <div class="collapse navbar-collapse ">
+                
+                {% block menu %}
+                {% endblock %}
+                <p class="navbar-text navbar-right">
+                    
+                    Usuario: 
+                    {{ user.username }}
+                </p>    
+                {% block menu_princ %}
+                {% endblock %}
+                
+
+            </div>
+        </div>
+    
+    </nav>
+
+    {% block contenido %}
+    {% endblock %}
+    {% block extrawindows %}
+    {% endblock %}
+
+{% endblock %}

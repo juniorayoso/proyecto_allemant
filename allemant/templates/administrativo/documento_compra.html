@@ -1,0 +1,151 @@
+{% extends "administrativo/home_administrativo.html" %}
+{% block menu %}
+  <ul class="nav navbar-nav">
+        <li><a href="{% url 'ventas' %}">Consulta Ventas</a></li>
+        <li class="dropdown">
+          <a href="{% url 'nuevo_venta' 0 %}" class="dropdown-toggle" data-toggle="dropdown">Nueva Venta <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="{% url 'nuevo_venta' 0 %}">Factura</a></li>
+            <li><a href="{% url 'nuevo_venta' 1 %}">Boleta</a></li>
+
+          </ul>
+        </li>
+        <li class="active"><a href="{% url 'compras' %}">Consulta Compras</a></li>
+        <li><a href="{% url 'nuevo_compra' %}">Nueva Compra </a></li>
+  </ul>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('#compras').DataTable();
+    } );
+  </script>
+
+{% endblock %}
+
+
+{% block contenido %}
+<div class="container-fluid">
+
+      <div class="row">
+        <div class="col-md-12">
+          <h2>  <i class="icon-coins"></i> Consulta Compras</h2>
+          <hr>
+        </div>
+      </div>
+
+     
+
+      <div >
+        <table id ="compras" class="table striped bordered">
+          <thead class="bg-sgray">
+
+          <tr>
+            <th class=" text-left">Nº Documento</th>
+            <th class=" text-left">Proveedor</th>
+            <th class="text-left">Descripción</th>
+            <th class=" text-left">Emisión</th>
+            <th class=" text-center"></th>
+            <th class=" text-center">Estado</th>
+            <th class=" text-right">IGV</th>
+            <th class=" text-right">Total</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          
+          <tr>
+          	<td>F001-00787</td>
+            <td>Carol Mendoza</td>
+            <td>Toner</td>
+            <td>16/12/2014</td>
+            <td class="text-center">S/.</td>
+            <td class="text-center">Por Vencer</td>
+            <td class="text-right">1,720.00</td>
+            <td class="text-right">13,720.00</td>
+          </tr>
+
+          <tr>
+          	<td>G001-00657</td>
+            <td>Jhonny Bejarano</td>
+            <td>Soat</td>
+            <td>16/12/2014</td>
+            <td class="text-center">S/.</td>
+            <td class="text-center">Vencida</td>
+            <td class="text-right">1,720.00</td>
+            <td class="text-right">13,720.00</td>
+          </tr>
+
+          <tr>
+          	<td>S001-35987</td>
+            <td>Sandra Hurtado</td>
+            <td>Soat</td>
+            <td>16/12/2014</td>
+            <td class="text-center">S/.</td>
+            <td class="text-center">Vigente</td>
+            <td class="text-right">1,720.00</td>
+            <td class="text-right">13,720.00</td>
+
+          <tr>
+          	<td>K001-0076587</td>
+            <td>Jose Sanchez</td>
+            <td>Laptop</td>
+            <td>16/12/2014</td>
+            <td class="text-center">S/.</td>
+            <td class="text-center">Vigente</td>
+            <td class="text-right">1,720.00</td>
+            <td class="text-right">13,720.00</td>
+
+          <tr>
+          	<td>F001-00787</td>
+            <td>Carol Mendoza</td>
+            <td>Filtro de Agua</td>
+            <td>16/12/2014</td>
+            <td class="text-center">S/.</td>            
+            <td class="text-center">Por Vencer</td>
+            <td class="text-right">1,720.00</td>
+            <td class="text-right">13,720.00</td>
+          </tr>
+
+          <tr>
+          	<td>G001-00657</td>
+            <td>Jhonny Bejarano</td>
+            <td>Desayuno Gerencia</td>
+            <td>16/12/2014</td>
+            <td class="text-center">S/.</td>            
+            <td class="text-center">Vencida</td>
+            <td class="text-right">1,720.00</td>
+            <td class="text-right">13,720.00</td>
+          </tr>
+
+          <tr>
+          	<td>S001-35987</td>
+            <td>Sandra Hurtado</td>
+            <td>Impresora</td>
+            <td>16/12/2014</td>
+            <td class="text-center">$</td>            
+            <td class="text-center">Vigente</td>
+            <td class="text-right">1,720.00</td>
+            <td class="text-right">13,720.00</td>
+          </tr>
+
+          <tr>
+          	<td>K001-0076587</td>
+            <td>Jose Sanchez</td>
+            <td>Servidor</td>
+            <td>16/12/2014</td>
+            <td class="text-center">$</td>            
+            <td class="text-center">Vigente</td>
+            <td class="text-right">1,720.00</td>
+            <td class="text-right">13,720.00</td>
+          </tr>
+
+
+          </tbody>
+        </table>
+      </div>  
+
+ </div>
+{% endblock %}
+
+
+ 

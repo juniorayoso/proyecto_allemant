@@ -1,0 +1,167 @@
+{% extends "poliza/home_poliza.html" %}
+{% load humanize %}
+{% block menu %}
+    <ul class="nav navbar-nav">
+        <li><a href="{% url 'lista_polizas' %}">Pólizas</a></li>
+        <li><a href="{% url 'nuevo_poliza' %}">Nueva Póliza </a></li>
+        <li class="active"><a href="{% url 'plan_pagos' %}">Plan de Pagos </a></li>
+    </ul>
+    <script type="text/javascript">
+        {% if poliza %}
+            var PLAN_PAGOS = "{% url 'plan_pagos' poliza.id %}"
+        {% endif %}  
+    </script>
+{% endblock %}
+{% block contenido %}
+	<div class="container-fluid">
+    	<div class="form-inline " >
+    		
+            <div class="well">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input  class="num_poliza form-control" placeholder="Ingrese el N° de poliza">
+                    </div>
+                </div>      
+    		    <div class="form-group">
+        			<button  id="buscar_poliza" class="select btn btn-success" >Buscar</button>
+        		</div>
+    		</div>
+    	</div>
+        
+        <div  class="well">
+        	<table id = "lista-pago" class="table" >
+        		<thead class="bg-sgray">
+    				<tr >
+    					<th class=" text-left">Nº Póliza</th>
+                        <th class=" text-left">Cliente</th>
+                        <th class="text-left">Aseguradora</th>
+                        <th class=" text-left">Ramo</th>
+                        <th class=" text-center">Inicio de Vigencia</th>
+                        <th class=" text-left"></th>
+                        <th class="text-right">Materia Asegurada</th>
+                        <th class=" text-right">Prima</th>
+    					
+    				</tr>
+    			</thead>
+
+        		<tbody id="poliza">
+
+        			{% if not busqueda %}
+                        
+                        <tr class="info">
+                            <td> {{ poliza.numero_poliza }} </td>
+                            <td> {{ poliza.cliente }} </td>
+                            <td> {{ poliza.cia }} </td>
+                            <td> {{ poliza.ramo }} </td>
+                            <td class="text-center"> {{ poliza.fecha_fin|date:"d-m-Y" }} </td>
+                            <td> {{ poliza.moneda.abreviatura }} </td>
+                            <td class="text-right"> {{ poliza.monto_asegurado|intcomma }} </td>
+                            <td id = 'prima' class="text-right"> {{ poliza.prima|intcomma }} </td>
+
+                            
+                        </tr>
+
+                    {% endif %}
+
+        		</tbody>
+                
+        	</table>
+
+        </div>
+
+        <div  class="well">
+            <div  class="container">
+                <form class="form-inline pull-right" role="form" >
+                    
+                    <div class="form-group">
+                        <label class="label-control">Agregar: </label>
+                    </div>      
+                    <div class="form-group">
+                    
+                        <select id ="num_cuotas" class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                        </select>
+                        
+                    </div>  
+                    <div class="form-group">
+                        <label class="label-control">Cuotas </label>
+                    </div>    
+                    <div class="form-group">
+                        <button type="button" id="agregar_cuotas" class=" btn btn-warning" >Ok</button>
+                    </div>
+                    <div class="form-group">
+                        <label class="label-control">Interés : </label>
+                    </div> 
+                    <div class="form-group">
+                        <input align="right" class="form-control input-sm" value="0" style="text-align: right"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="label-control">% </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div  class="well">
+            {% if not busqueda %}
+                <form method="post" action="{% url 'plan_pagos' poliza.id %}" >
+                    <table class="table " >
+                        <thead class="bg-sgray">
+                            <tr >
+                                <th>Cuota</th>
+                                <th>N° de Cupon</th>
+                                <th>Monto</th>
+                                <th>Fecha Vencimiento</th>
+                                <th></th>
+                                <!--<th>Fecha Pago</th>
+                                <th>Banco</th>
+                                <th>N° Voucher</th>-->
+                            </tr>
+                        </thead>
+                        <tbody id="cuotas">
+                                
+                            {% csrf_token %}
+                            
+                            {{ plan_forms.management_form }}
+                            {% for plan in plan_forms %}
+                                <tr class="info">
+
+                                    <td class="hide"> {{ plan.id }}  {{ plan.numero_cuota }}</td>
+                                    <td> {{ plan.initial.numero_cuota }} </td>
+                                    <td> {{ plan.numero_cupon }} </td>
+                                    <td> {{ plan.monto }} </td>
+                                    <td> {{ plan.fecha_vence }} </td>
+                                    <td>  <i  class="borrar_cupon icon-remove btn" style="color: red"></i></td>
+                                    <!--<td> {{ plan.fecha_pago }} </td>
+                                    <td> {{ plan.banco }} </td>
+                                    <td> {{ plan.numero_voucher }} </td>-->
+                                    
+
+                                    
+                                </tr>
+                            {% endfor %}
+
+                                
+
+                        </tbody>
+                    </table>
+                    <div class="container">
+                        <button type="submit" id="grabar_cupones" class=" btn btn-success pull-right" onclick="return confirm('¿Desea guardar los cambios?')">Grabar</button>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
